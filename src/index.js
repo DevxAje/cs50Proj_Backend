@@ -11,13 +11,25 @@ const userRoutes = require('./routes/user');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// --- FIX START ---
+// We combine everything into one CORS block. 
+// Do NOT include /#/auth in the origin string.
 app.use(cors({
-  origin: process.env.CORS_ORIGIN?.split(',') || '*',
+  origin: [
+    'https://cs50-frontend-iw1hs3qi1-devxajes-projects.vercel.app', // Base Vercel URL
+    'http://localhost:5173' // Your local Vite dev server
+  ],
   credentials: true
 }));
+// --- FIX END ---
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Friendly message for the base URL
+app.get('/', (req, res) => {
+  res.json({ success: true, message: 'Workout API is live and healthy!' });
+});
 
 // Health check
 app.get('/health', (req, res) => {
@@ -41,11 +53,6 @@ app.use((req, res) => {
 
 // Error handler (MUST be last)
 app.use(errorHandler);
-
-app.use(cors({
-  origin: 'https://cs50-frontend-iw1hs3qi1-devxajes-projects.vercel.app/#/auth', // Allow your React app
-  credentials: true
-}));
 
 app.listen(PORT, () => {
   console.log(`✓ Server running on port ${PORT}`);
