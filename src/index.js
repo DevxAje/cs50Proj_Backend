@@ -11,17 +11,15 @@ const userRoutes = require('./routes/user');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// --- FIX START ---
-// We combine everything into one CORS block. 
-// Do NOT include /#/auth in the origin string.
 app.use(cors({
   origin: [
-    'https://cs50-frontend-iw1hs3qi1-devxajes-projects.vercel.app', // Base Vercel URL
-    'http://localhost:5173' // Your local Vite dev server
+    'https://cs50-frontend-theta.vercel.app',
+    'https://cs50-frontend-12fxv6ftj-devxajes-projects.vercel.app', 
+    /\.vercel\.app$/, // This regex allows ALL vercel preview links
+    'http://localhost:5173'
   ],
   credentials: true
 }));
-// --- FIX END ---
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
