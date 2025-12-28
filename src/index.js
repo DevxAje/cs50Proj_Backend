@@ -43,7 +43,7 @@ app.use((req, res) => {
 app.use(errorHandler);
 
 app.use(cors({
-  origin: 'http://localhost:3000', // Allow your React app
+  origin: 'https://cs50-frontend-iw1hs3qi1-devxajes-projects.vercel.app/#/auth', // Allow your React app
   credentials: true
 }));
 
